@@ -146,3 +146,43 @@ SELECT id, name, created_at
 FROM products
 ORDER BY created_at DESC
 LIMIT 3;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+orders (id, user_id, amount, created_at) 
+users (id, name)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. Вибрати всі замовлення користувача з ім’ям "John".
+
+SELECT o.id, o.amount, o.created_at
+FROM orders o
+INNER JOIN users u ON o.user_id = u.id
+WHERE u.name = 'John';
+
+2. Порахувати загальну суму замовлень у таблиці orders.
+
+SELECT SUM(amount) AS total_amount
+FROM orders;
+
+3. Вивести користувача, який зробив найбільше замовлень.
+
+SELECT u.id, u.name, COUNT(o.id) AS total_orders
+FROM users u
+JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name
+ORDER BY total_orders DESC
+LIMIT 1;
+
+4. Порахувати середній розмір замовлення (amount).
+
+SELECT AVG(amount) AS avg_order
+FROM orders;
+
+5. Вибрати 5 останніх замовлень.
+
+SELECT id, user_id, amount, created_at
+FROM orders
+ORDER BY created_at DESC
+LIMIT 5;
+
+
